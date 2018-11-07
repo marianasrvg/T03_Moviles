@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -48,7 +49,7 @@ public class FragmentTechnology extends Fragment {
         itemProduct.setDescription("Llevate esta Mac con un 30% de descuento" +
                 "para que puedas programar para XCode y Android sin tener que " +
                 "batallar tanto como en Windows");
-        myDataSet.add(itemProduct);
+
         ItemProduct itemProduct2 = new ItemProduct();
 
         itemProduct2.setTitle("Alienware 17");
@@ -58,7 +59,30 @@ public class FragmentTechnology extends Fragment {
         itemProduct2.setImage(1);
         itemProduct2.setDescription("Llevate esta Alienware con un 30% de descuento" +
                 "para que puedas jugar");
+
+
+        if(this.getArguments() != null){
+            ItemProduct itemProduct1 = new ItemProduct();
+            itemProduct1 = this.getArguments().getParcelable("ITEM");
+            Log.e("AUX", "Si entre");
+            switch (itemProduct1.getImage()){
+                case 0:
+                    itemProduct.setTitle(itemProduct1.getTitle());
+                    itemProduct.setStore(itemProduct1.getStore());
+                    itemProduct.setLocation(itemProduct1.getLocation());
+                    itemProduct.setPhone(itemProduct1.getPhone());
+                    break;
+                case 1:
+                    itemProduct2.setTitle(itemProduct1.getTitle());
+                    itemProduct2.setStore(itemProduct1.getStore());
+                    itemProduct2.setLocation(itemProduct1.getLocation());
+                    itemProduct2.setPhone(itemProduct1.getPhone());
+                    break;
+            }
+        }
+        myDataSet.add(itemProduct);
         myDataSet.add(itemProduct2);
+
         mAdapter = new AdapterProduct(getActivity(), myDataSet);
         recyclerView.setAdapter(mAdapter);
         return view;

@@ -50,6 +50,7 @@ public class AdapterProduct extends RecyclerView.Adapter<AdapterProduct.ViewHold
 
         public ViewHolder(View v){
             super(v);
+            mEventLayout = (RelativeLayout) v.findViewById(R.id.item_product_layout);
             imageView = v.findViewById(R.id.item_product_image);
             title = v.findViewById(R.id.item_product_title);
             productStore = v.findViewById(R.id.item_product_store);
@@ -90,6 +91,15 @@ public class AdapterProduct extends RecyclerView.Adapter<AdapterProduct.ViewHold
                 Intent intent = new Intent(Intent.ACTION_DIAL,
                         Uri.parse("tel:"+ products.get(position).getPhone()));
                 context.startActivity(intent);
+            }
+        });
+
+        holder.mEventLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent activity = new Intent(view.getContext(), ActivityProduct.class);
+                activity.putExtra("ITEM", products.get(position));
+                context.startActivity(activity);
             }
         });
 

@@ -1,6 +1,9 @@
 package com.example.mari_.itesostore.beans;
 
-public class ItemProduct {
+import android.os.Parcel;
+import android.os.Parcelable;
+
+public class ItemProduct implements Parcelable {
     private int image;
     private String title;
     private String store;
@@ -25,6 +28,27 @@ public class ItemProduct {
         this.phone = phone;
         this.description = description;
     }
+
+    protected ItemProduct(Parcel in) {
+        image = in.readInt();
+        title = in.readString();
+        store = in.readString();
+        location = in.readString();
+        phone = in.readString();
+        description = in.readString();
+    }
+
+    public static final Creator<ItemProduct> CREATOR = new Creator<ItemProduct>() {
+        @Override
+        public ItemProduct createFromParcel(Parcel in) {
+            return new ItemProduct(in);
+        }
+
+        @Override
+        public ItemProduct[] newArray(int size) {
+            return new ItemProduct[size];
+        }
+    };
 
     public int getImage() {
         return image;
@@ -86,5 +110,19 @@ public class ItemProduct {
                 '}';
     }
 
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeInt(image);
+        parcel.writeString(title);
+        parcel.writeString(store);
+        parcel.writeString(location);
+        parcel.writeString(phone);
+        parcel.writeString(description);
+    }
 }
 
